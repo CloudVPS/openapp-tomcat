@@ -8,11 +8,11 @@ Homepage: http://www.openpanel.com/openapp/
 
 Package: openapp-tomcat
 Architecture: all
-Pre-Depends: openapp-backup, openapp-tuning, mysql-server
+Pre-Depends: openapp-backup, openapp-tuning, mysql-server, lighttpd
 Suggests: openapp-xtrabackup
-Depends: rsync, openapp-phpmyadmin-installer, openpanel-openapp-mod-mysql, openpanel-openapp-mod-smtp, openpanel-openapp-mod-backup, tomcat6, tomcat6-admin, libapache2-mod-jk, libapache2-mod-php5, php5-mysql
+Depends: rsync, openapp-phpmyadmin-installer, openpanel-openapp-mod-mysql, openpanel-openapp-mod-smtp, openpanel-openapp-mod-backup, tomcat6, tomcat6-admin, php5-mysql, php5-cgi
 Provides: openapp-app
-Conflicts: openapp-app
+Conflicts: openapp-app, apache2, apache2-utils, apache2.2-bin, apache2.2-common
 Description: This will install your tomcat OpenApp Appliance!
  Please note that you might need xtrabackup too. See
  http://openpanel.com/openapp-tomcat for instructions

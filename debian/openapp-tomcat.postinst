@@ -34,6 +34,8 @@ case "$1" in
 				openapp-phpmyadmin-passwd
 			fi
 
+			lighttpd-enable-mod proxy
+
 			echo "Identify ourself to openapp-tuning and run it"
 			mkdir -p /etc/openapp-tuning/
 			echo "tomcat" > /etc/openapp-tuning/identity
