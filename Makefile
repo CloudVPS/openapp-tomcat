@@ -4,10 +4,10 @@ OP_SOURCE=${CURDIR}/openpanel-openapp-mod-tomcat
 
 install:
 # bin
-	mkdir -p $(PREFIX)/usr/bin
-	cp openapp-tomcat-passwd $(PREFIX)/usr/bin
-	mkdir -p $(PREFIX)/etc/lighttpd/conf-enabled
-	cp etc/lighttpd/conf-enabled/tomcat.conf $(PREFIX)/etc/lighttpd/conf-enabled
+	mkdir -p $(OA_PREFIX)/usr/bin
+	cp openapp-tomcat-passwd $(OA_PREFIX)/usr/bin
+	mkdir -p $(OA_PREFIX)/etc/lighttpd/conf-enabled
+	cp etc/lighttpd/conf-enabled/tomcat.conf $(OA_PREFIX)/etc/lighttpd/conf-enabled
 
 	mkdir -p ${OP_PREFIX}/var/openpanel/modules/OpenAppTomcat.module
 	mkdir -p ${OP_PREFIX}/var/openpanel/wallpaper
