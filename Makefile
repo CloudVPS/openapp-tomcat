@@ -32,6 +32,3 @@ uninstall:
 
 clean:
 	-echo "NOP"
-
- 
-
