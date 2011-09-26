@@ -1,0 +1,51 @@
+#!/usr/bin/perl -w
+
+use XML::Simple;
+
+my $filename = '/etc/tomcat6/tomcat-users.xml';
+my $xml;
+my $password;
+my $managerfound = undef;
+
+if (!defined($ARGV[0])) {
+	$password = `pwgen 10`;
+} elsif ($ARGV[0] eq "stdin") {
+	print "Please enter your password: ";
+	$password = <STDIN>;
+} else {
+	print "You should enter 'stdin' as an argument, or nothing\n";
+	exit
+}
+
+chomp($password);
+
+if (-e $filename) {
+	$xml = XMLin($filename, ForceArray => ['user']);
+}
+
+foreach my $user (@{$xml->{user}}) {
+	if ($user->{username} eq "manager") {
+		$managerfound = 1;
+		$user->{password} = $password,
+	}
+}
+
+if (!defined($managerfound)) {
+	my $user = {
+		'username' => 'manager',
+		'password' => $password,
+		'roles'     => 'manager' };		    
+	push @{$xml->{user}}, $user;
+}
+
+print XMLout($xml, RootName => 'tomcat-users');
+
+open LF, "+>$filename" or die "Could not open file $filename: $!";
+print LF XMLout($xml, RootName => 'tomcat-users');
+close LF;
+
+print "Your new password is: ".$password."\n";
+
+my $gid = `id -g tomcat6`;
+chown 0, $gid, $filename;
+chmod 0640, $filename;
