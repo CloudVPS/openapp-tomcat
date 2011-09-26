@@ -21,7 +21,7 @@ case "$1" in
     configure)
 		if [ -z $2 ]; then
 			echo "Creating symlinks to make nice backups of your OpenApp Appliance"
-			SCRIPTS="home mysql openpanel"
+			SCRIPTS="home mysql openpanel tomcat"
 			for SCRIPT in ${SCRIPTS}; do
 				openapp-backup-enmod ${SCRIPT}
 			done

@@ -1,0 +1,29 @@
+#!/bin/bash
+# Prio: 100
+
+. /usr/lib/openapp-backup/includes/index
+
+###
+# This script will backup and restore /var/lib/tomcat6
+
+BACKUPDIR=$1
+ACTION=$2
+
+run_backup() {
+    rsync -a /var/lib/tomcat6 ${BACKUPDIR}/tomcat6 || fatal "Could not rsync /var/lib/tomcat6 to ${BACKUPDIR}"
+    rsync -a /etc/tomcat6 ${BACKUPDIR}/etc || fatal "Could not rsync /etc/tomcat6 to ${BACKUPDIR}"
+}
+
+run_restore() {
+    rsync -a ${BACKUPDIR}/tomcat6/ /var/lib/
+    rsync -a ${BACKUPDIR}/etc/ /etc/
+}
+
+case ${ACTION} in
+    backup)
+        run_backup
+    ;;
+    restore)
+        run_restore
+    ;;
+esac

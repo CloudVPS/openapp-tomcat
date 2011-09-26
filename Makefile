@@ -14,6 +14,10 @@ install:
 	mkdir -p $(OA_PREFIX)/etc/lighttpd/conf-enabled
 	cp etc/lighttpd/conf-enabled/tomcat.conf $(OA_PREFIX)/etc/lighttpd/conf-enabled
 
+# openapp-backup
+	mkdir -p $(OA_PREFIX)/usr/lib/openapp-backup/modules
+	cp openapp-backup/* $(OA_PREFIX)/usr/lib/openapp-backup/modules
+
 	mkdir -p ${OP_PREFIX}/var/openpanel/modules/OpenAppTomcat.module
 	mkdir -p ${OP_PREFIX}/var/openpanel/wallpaper
 	mkdir -p ${OP_PREFIX}/var/openpanel/http/images

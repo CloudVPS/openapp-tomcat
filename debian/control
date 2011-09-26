@@ -10,7 +10,7 @@ Package: openapp-tomcat
 Architecture: all
 Pre-Depends: openapp-backup, openapp-tuning, mysql-server, lighttpd
 Suggests: openapp-xtrabackup
-Depends: rsync, openapp-phpmyadmin-installer, openapp-awstats, openpanel-openapp-mod-mysql, openpanel-openapp-mod-smtp, openpanel-openapp-mod-backup, tomcat6, tomcat6-admin, php5-mysql, php5-cgi
+Depends: rsync, openapp-phpmyadmin-installer, openapp-awstats, openpanel-openapp-mod-mysql, openpanel-openapp-mod-smtp, openpanel-openapp-mod-backup, tomcat6, tomcat6-admin, php5-mysql, php5-cgi, openpanel-openapp-mod-tomcat
 Provides: openapp-app
 Conflicts: openapp-app, apache2, apache2.2-bin, apache2.2-common
 Description: This will install your tomcat OpenApp Appliance!
@@ -20,6 +20,6 @@ Description: This will install your tomcat OpenApp Appliance!
 Package: openpanel-openapp-mod-tomcat
 Architecture: all
 Pre-Depends: openpanel-core, openpanel-authd
-Depends: openapp-tomcat, openpanel-openapp-mod-user, openpanel-core, openpanel-api-sh, openpanel-openapp-call, ${shlibs:Depends}, ${misc:Depends}, openpanel-validatepem, openapp-awstats
+Depends: openapp-tomcat, openpanel-openapp-mod-user, openpanel-core, openpanel-api-sh, openpanel-openapp-call, ${shlibs:Depends}, ${misc:Depends}, openpanel-validatepem, openapp-awstats, libxml-simple-perl
 Description: OpenPanel module to manage OpenApp Tomcat
  Manage the OpenApp Tomcat
