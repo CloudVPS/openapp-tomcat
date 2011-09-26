@@ -2,6 +2,11 @@ OA_PREFIX=${CURDIR}/debian/openapp-tomcat
 OP_PREFIX=${CURDIR}/debian/openpanel-openapp-mod-tomcat
 OP_SOURCE=${CURDIR}/openpanel-openapp-mod-tomcat
 
+build:
+	mkmodulexml < ${OP_SOURCE}/module.def > ${OP_SOURCE}/module.xml
+	convert -modulate 50,100,100 ${OP_SOURCE}/tomcat.png ${OP_SOURCE}/down_tomcat.png
+	convert ${OP_SOURCE}/wallpaper.png ${OP_SOURCE}/wallpaper.jpg
+
 install:
 # bin
 	mkdir -p $(OA_PREFIX)/usr/bin
@@ -19,11 +24,6 @@ install:
 	mv ${OP_PREFIX}/var/openpanel/modules/OpenAppTomcat.module/logo.png ${OP_PREFIX}/var/openpanel/http/images/OpenPanelLogo.png
 	cp ${OP_SOURCE}/wallpaper.jpg ${OP_PREFIX}/var/openpanel/wallpaper/default.jpg
 	install -m 755 ${OP_SOURCE}/verify ${OP_PREFIX}/var/openpanel/modules/OpenAppTomcat.module/verify
-
-build:
-	mkmodulexml < ${OP_SOURCE}/module.def > ${OP_SOURCE}/module.xml
-	convert -modulate 50,100,100 ${OP_SOURCE}/tomcat.png ${OP_SOURCE}/down_tomcat.png
-	convert ${OP_SOURCE}/wallpaper.png ${OP_SOURCE}/wallpaper.jpg
 
 uninstall:
 # bin
