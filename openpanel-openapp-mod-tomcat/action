@@ -1,0 +1,34 @@
+#!/bin/bash
+. /var/openpanel/api/sh/module.sh
+
+TomcatAdmin.update() {
+  appid=tomcat
+  newpass=$(coreval TomcatAdmin password)
+  awstats=$(coreval TomcatAdmin awstatspass)
+  [ -z "${awstats}" ] || authd runscript openapp-call "awstats" passwd "${awstats}"
+  if [ ! -z ${newpass} ]; then
+    authd runscript openapp-call "$appid" passwd "$newpass"
+
+    restart_tomcat
+  fi
+}
+
+Module.getconfig() {
+
+  cat << _EOF_
+  <openpanel.module>
+    <dict id="TomcatAdmin" type="class">
+      <dict id="Admin">
+	    <string id="password">*</string>
+      </dict>
+    </dict>
+  </openpanel.module>
+_EOF_
+  exitquiet
+}
+
+restart_tomcat() {
+	authd reloadservice tomcat6
+}
+
+implement OpenAppTomcat.module

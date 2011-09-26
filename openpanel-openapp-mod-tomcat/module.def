@@ -1,0 +1,64 @@
+# ============================================================================
+# This file is part of OpenPanel - The Open Source Control Panel
+# OpenPanel is free software: you can redistribute it and/or modify it 
+# under the terms of the GNU General Public License as published by the Free 
+# Software Foundation, using version 3 of the License.
+#
+# Please note that use of the OpenPanel trademark may be subject to additional 
+# restrictions. For more information, please visit the Legal Information 
+# section of the OpenPanel website on http://www.openpanel.com/
+#
+# OpenPanel OpenAppTomcat.module for setting the admin password
+# ============================================================================
+module OpenAppTomcat			< uuid 2e3f8d90-68c7-44d0-b956-dc34a3f433d7
+								< version 1.0
+								< languages en_EN
+								< apitype commandline
+								< getconfig true
+								< license GPLv3
+								< author OpenPanel
+								< url http://www.openpanel.com/
+	
+# ============================================================================
+# CLASSES
+# ============================================================================
+class TomcatAdmin               < uuid 9ef961f1-3d0b-4891-b3bf-2ea7c468d0ee
+								< version 1
+								< indexing manual
+								< uniquein class
+								< shortname tomcatadmin
+								< singleton Admin
+								< title Tomcat
+								< description Tomcat settings
+								< sortindex 10
+								< explanation tomcat.html
+								< icon tomcat.png
+							
+								< capabilities update
+								< listview id emailaddress
+								< required id password emailaddress
+
+	string id					: Username
+								< example Admin
+								< textwidth 16
+								
+	password password			: Password
+								< textwidth 16
+								< example sPswd13t
+								< regexp [:password:]
+
+    password awstatspass        : Awstats password (user 'admin')
+                                < textwidth 16
+                                < example sPswd13t
+                                < regexp [:password:]
+                                < tooltip Entering a password here will enable awstats for your site. The username is 'admin' and the url is http://example.com/cgi-bin/awstats.pl
+
+
+# ============================================================================
+# AUTHD
+# ============================================================================
+authd scripts
+	script	openapp-call
+# ----------------------------------------------------------------------------
+authd services
+	service tomcat6
