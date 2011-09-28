@@ -18,6 +18,7 @@ TomcatAdmin.update() {
 
 HTTPS.delete() {
 	authd deletefile ${SSLDIR}/tomcat.pem
+	authd deletefile ${LIGHTTPDIR}/ssl.conf
 
 	restart_lighttpd
 }
