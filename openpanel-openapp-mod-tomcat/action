@@ -1,6 +1,9 @@
 #!/bin/bash
 . /var/openpanel/api/sh/module.sh
 
+SSLDIR=/etc/ssl/private
+LIGHTTPDIR=/etc/lighttpd/conf-enabled
+
 TomcatAdmin.update() {
   appid=tomcat
   newpass=$(coreval TomcatAdmin password)
@@ -12,6 +15,42 @@ TomcatAdmin.update() {
     restart_tomcat
   fi
 }
+
+HTTPS.delete() {
+	authd deletefile ${SSLDIR}/tomcat.pem
+
+	restart_lighttpd
+}
+
+HTTPS.create() {
+	SSLCERT=$(coreval HTTPS pem)
+
+cat <<EOB > $(pwd)/tomcat.pem
+${SSLCERT}
+EOB
+
+/var/openpanel/bin/validatepem.py $(pwd)/tomcat.pem
+
+[ $? -eq 0 ] || exiterror "Your certificate has issues. Is the private key included (and without a passphrase)?"
+
+cat <<EOB > $(pwd)/ssl.conf
+\$SERVER["socket"] == "0.0.0.0:443" {
+    ssl.engine                  = "enable"
+    ssl.pemfile                 = "${SSLDIR}/tomcat.pem"
+}
+EOB
+
+	authd makedir ${SSLDIR}
+	authd installfile tomcat.pem ${SSLDIR}
+	authd installfile ssl.conf ${LIGHTTPDIR}
+
+	restart_lighttpd
+}
+
+HTTPS.update() {
+    HTTPS.create
+}
+
 
 Module.getconfig() {
 
@@ -29,6 +68,10 @@ _EOF_
 
 restart_tomcat() {
 	authd reloadservice tomcat6
+}
+
+restart_lighttpd() {
+	authd reloadservice lighttpd
 }
 
 implement OpenAppTomcat.module

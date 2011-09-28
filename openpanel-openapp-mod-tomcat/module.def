@@ -53,6 +53,23 @@ class TomcatAdmin               < uuid 9ef961f1-3d0b-4891-b3bf-2ea7c468d0ee
                                 < regexp [:password:]
                                 < tooltip Entering a password here will enable awstats for your site. The username is 'admin' and the url is http://example.com/cgi-bin/awstats.pl
 
+class HTTPS						< uuid 8ad08ef7-0d77-48bb-94e4-2e8219aaa123
+								< version 1
+								< requires TomcatAdmin
+								< indexing manual
+								< uniquein parent
+								< singleton https
+								< shortname https
+								< title HTTPS Settings
+								< description Enable HTTPS on your Tomcat install
+                                < required pem
+								
+								< capabilities create update delete
+								
+	textarea pem				: Certificate for HTTPS
+								< textwidth 48
+								< rows 12
+
 
 # ============================================================================
 # AUTHD
@@ -62,3 +79,21 @@ authd scripts
 # ----------------------------------------------------------------------------
 authd services
 	service tomcat6
+	service lighttpd
+# ----------------------------------------------------------------------------
+authd fileops
+	match *.conf				: /etc/lighttpd/conf-enabled
+								< user root
+								< group root
+								< perms 0644
+
+	match *						: /etc/ssl/private
+								< user root
+								< group ssl-cert
+								< perms 0750
+
+	match tomcat.pem			: /etc/ssl/private
+								< user root
+								< group root
+								< perms 0600
+
